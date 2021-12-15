@@ -1,11 +1,11 @@
 ---
-title: 测试git
+title: git
 date: 2020-09-24 09:55:40
 tags: 
-- 测试
+- git
 ---
 
-# 测试git
+# git
 
 ## 目标
 
