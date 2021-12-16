@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="每天进步一点点" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    hexo-github-搭建个人博客 |  Hello,World
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<script src="/js/pace.min.js"></script>
+
+
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Hello,World" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-hexo" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  hexo-github-搭建个人博客
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/12/15/hexo/" class="article-date">
+  <time datetime="2021-12-15T14:15:55.000Z" itemprop="datePublished">2021-12-15</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/web/">web</a> / <a class="article-category-link" href="/categories/web/framework/">framework</a> / <a class="article-category-link" href="/categories/web/framework/hexo/">hexo</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2k字</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7分钟</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>布局（layout）</li>
+</ul>
+<p>Hexo 有三种默认布局：<code>post</code>、<code>page</code> 和 <code>draft</code>。在创建这三种不同类型的文件时，它们将会被保存到不同的路径；而您自定义的其他布局和 <code>post</code> 相同，都将储存到 <code>source/_posts</code> 文件夹。</p>
+<table>
+<thead>
+<tr>
+<th>布局</th>
+<th>路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>post</td>
+<td>source/_posts</td>
+</tr>
+<tr>
+<td>page</td>
+<td>source</td>
+</tr>
+<tr>
+<td>draft</td>
+<td>source/_draft</td>
+</tr>
+</tbody></table>
+<ul>
+<li>模版（Scaffold）</li>
+</ul>
+<p>在新建文章时，Hexo 会根据 <code>scaffolds</code> 文件夹内相对应的文件来建立文件，例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new photo <span class="string">"My Gallery"</span></span><br></pre></td></tr></table></figure>
+
+<p>在执行这行指令时，Hexo 会尝试在 <code>scaffolds</code> 文件夹中寻找 <code>photo.md</code>，并根据其内容建立文章。</p>
+<ul>
+<li>草稿（draft）</li>
+</ul>
+<p>这种布局在建立时会被保存到 <code>source/_drafts</code> 文件夹，您可通过 <code>publish</code> 命令将草稿移动到 <code>source/_posts</code> 文件夹，该命令的使用方式与 <code>new</code> 十分类似。</p>
+<ul>
+<li>资源文件夹</li>
+</ul>
+<p>资源（Asset）代表 <code>source</code> 文件夹中除了文章以外的所有文件，例如图片、CSS、JS 文件等。比方说，如果你的Hexo项目中只有少量图片，那最简单的方法就是将它们放在 <code>source/images</code> 文件夹中。然后通过类似于 <code>![](/images/image.jpg)</code> 的方法访问它们。</p>
+<p>对于那些想要更有规律地提供图片和其他资源以及想要将他们的资源分布在各个文章上的人来说，Hexo也提供了更组织化的方式来管理资源。这个稍微有些复杂但是管理资源非常方便的功能可以通过将 <code>config.yml</code> 文件中的 <code>post_asset_folder</code> 选项设为 <code>true</code> 来打开。</p>
+<p>当资源文件管理功能打开后，Hexo将会在你每一次通过 <code>hexo new [layout] &lt;title&gt;</code> 命令创建新文章时自动创建一个文件夹。这个资源文件夹将会有与这个文章文件一样的名字。将所有与你的文章有关的资源放在这个关联文件夹中之后，你可以通过相对路径来引用它们，这样你就得到了一个更简单而且方便得多的工作流。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在当前目录或指定目录下初始化网站</span></span><br><span class="line">$ hexo init [folder]</span><br><span class="line"><span class="comment"># 创建文章 您可以在命令中指定文章的布局（layout），默认为 post，可以通过修改 _config.yml 中的 default_layout 参数来指定默认布局</span></span><br><span class="line">$ hexo new [layout] &lt;title&gt;</span><br><span class="line">$ hexo new page --path about/me <span class="string">"About me"</span></span><br><span class="line"><span class="comment"># 生成静态文件 f相当于hexo clean</span></span><br><span class="line">$ hexo g -f -d --debug</span><br><span class="line"><span class="comment"># 启动服务器。默认情况下，访问网址为： http://localhost:4000/</span></span><br><span class="line">$ hexo s -p 5000 --debug</span><br><span class="line"><span class="comment"># 部署网站 -g部署之前预先生成静态文件</span></span><br><span class="line">$ hexo d -g --debug</span><br><span class="line"><span class="comment"># 清除缓存文件 (db.json) 和已生成的静态文件 (public)。在某些情况（尤其是更换主题后），如果发现您对站点的更改无论如何也不生效，您可能需要运行该命令。</span></span><br><span class="line">$ hexo clean</span><br><span class="line"><span class="comment"># 列出网站资料</span></span><br><span class="line">$ hexo list &lt;<span class="built_in">type</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="写作"><a href="#写作" class="headerlink" title="写作"></a>写作</h3><h4 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h4><p>Front-matter 是文件最上方以 <code>---</code> 分隔的区域，用于指定个别文件的变量，举例来说：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: Hello World</span><br><span class="line">date: 2013/7/13 20:46:25</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">- </span>Diary</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">- </span>PS3</span><br><span class="line"><span class="bullet">- </span>Games</span><br><span class="line">---</span><br><span class="line">参数	描述	默认值</span><br><span class="line">layout	布局	config.default_layout</span><br><span class="line">title	标题	文章的文件名</span><br><span class="line">date	建立日期	文件建立日期</span><br><span class="line">updated	更新日期	文件更新日期</span><br><span class="line">comments	开启文章的评论功能	true</span><br><span class="line">tags	标签（不适用于分页）	</span><br><span class="line">categories	分类（不适用于分页）	</span><br><span class="line">permalink	覆盖文章网址	</span><br><span class="line">excerpt	Page excerpt in plain text. Use this plugin to format the text	</span><br><span class="line">disableNunjucks	Disable rendering of Nunjucks tag &#123;&#123; &#125;&#125;/&#123;% %&#125; and tag plugins when enabled	</span><br><span class="line">lang	Set the language to override auto-detection	Inherited from _config.yml</span><br></pre></td></tr></table></figure>
+
+<h4 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h4><p>只有文章支持分类和标签，您可以在 Front-matter 中设置。在其他系统中，分类和标签听起来很接近，但是在 Hexo 中两者有着明显的差别：分类具有顺序性和层次性，也就是说 <code>Foo, Bar</code> 不等于 <code>Bar, Foo</code>；而标签没有顺序和层次。具体参考上边。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 会使分类Life成为Diary的子分类，而不是并列分类。因此，有必要为您的文章选择尽可能准确的分类。</span></span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">  - </span>Diary</span><br><span class="line"><span class="bullet">  - </span>Life</span><br><span class="line"> </span><br><span class="line"> # 如果你需要为文章添加多个分类，可以尝试以下 list 中的方法。</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">- </span>[Diary, PlayStation]</span><br><span class="line"><span class="bullet">- </span>[Diary, Games]</span><br><span class="line"><span class="bullet">- </span>[Life]</span><br><span class="line"><span class="section"># 此时这篇文章同时包括三个分类： PlayStation 和 Games 分别都是父分类 Diary 的子分类，同时 Life 是一个没有子分类的分类。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="一键部署"><a href="#一键部署" class="headerlink" title="一键部署"></a>一键部署</h3><ol>
+<li>安装 <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改配置</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">&lt;repository</span> <span class="string">url&gt;</span> <span class="comment">#https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">[branch]</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">[message]</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>生成站点文件并推送至远程库</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="网站"><a href="#网站" class="headerlink" title="网站"></a>网站</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>title</code></td>
+<td align="left">网站标题</td>
+</tr>
+<tr>
+<td align="left"><code>subtitle</code></td>
+<td align="left">网站副标题</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left">网站描述</td>
+</tr>
+<tr>
+<td align="left"><code>keywords</code></td>
+<td align="left">网站的关键词。支持多个关键词。</td>
+</tr>
+<tr>
+<td align="left"><code>author</code></td>
+<td align="left">您的名字</td>
+</tr>
+<tr>
+<td align="left"><code>language</code></td>
+<td align="left">网站使用的语言。对于简体中文用户来说，使用不同的主题可能需要设置成不同的值，请参考你的主题的文档自行设置，常见的有 <code>zh-Hans</code>和 <code>zh-CN</code>。</td>
+</tr>
+<tr>
+<td align="left"><code>timezone</code></td>
+<td align="left">网站时区。Hexo 默认使用您电脑的时区。请参考 <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">时区列表</a> 进行设置，如 <code>America/New_York</code>, <code>Japan</code>, 和 <code>UTC</code> 。一般的，对于中国大陆地区可以使用 <code>Asia/Shanghai</code>。</td>
+</tr>
+</tbody></table>
+<h3 id="网址"><a href="#网址" class="headerlink" title="网址"></a>网址</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>url</code></td>
+<td align="left">网址, 必须以 <code>http://</code> 或 <code>https://</code> 开头</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>root</code></td>
+<td align="left">网站根目录</td>
+<td align="left"><code>url&#39;s pathname</code></td>
+</tr>
+<tr>
+<td align="left"><code>permalink</code></td>
+<td align="left">文章的 <a href="https://hexo.io/zh-cn/docs/permalinks">永久链接</a> 格式</td>
+<td align="left"><code>:year/:month/:day/:title/</code></td>
+</tr>
+<tr>
+<td align="left"><code>permalink_defaults</code></td>
+<td align="left">永久链接中各部分的默认值</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>pretty_urls</code></td>
+<td align="left">改写 <a href="https://hexo.io/zh-cn/docs/variables"><code>permalink</code></a> 的值来美化 URL</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>pretty_urls.trailing_index</code></td>
+<td align="left">是否在永久链接中保留尾部的 <code>index.html</code>，设置为 <code>false</code> 时去除</td>
+<td align="left"><code>true</code></td>
+</tr>
+<tr>
+<td align="left"><code>pretty_urls.trailing_html</code></td>
+<td align="left">是否在永久链接中保留尾部的 <code>.html</code>, 设置为 <code>false</code> 时去除 (<em>对尾部的 <code>index.html</code>无效</em>)</td>
+<td align="left"><code>true</code></td>
+</tr>
+</tbody></table>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>source_dir</code></td>
+<td align="left">资源文件夹，这个文件夹用来存放内容。</td>
+<td align="left"><code>source</code></td>
+</tr>
+<tr>
+<td align="left"><code>public_dir</code></td>
+<td align="left">公共文件夹，这个文件夹用于存放生成的站点文件。</td>
+<td align="left"><code>public</code></td>
+</tr>
+<tr>
+<td align="left"><code>tag_dir</code></td>
+<td align="left">标签文件夹</td>
+<td align="left"><code>tags</code></td>
+</tr>
+<tr>
+<td align="left"><code>archive_dir</code></td>
+<td align="left">归档文件夹</td>
+<td align="left"><code>archives</code></td>
+</tr>
+<tr>
+<td align="left"><code>category_dir</code></td>
+<td align="left">分类文件夹</td>
+<td align="left"><code>categories</code></td>
+</tr>
+<tr>
+<td align="left"><code>code_dir</code></td>
+<td align="left">Include code 文件夹，<code>source_dir</code> 下的子目录</td>
+<td align="left"><code>downloads/code</code></td>
+</tr>
+<tr>
+<td align="left"><code>i18n_dir</code></td>
+<td align="left">国际化（i18n）文件夹</td>
+<td align="left"><code>:lang</code></td>
+</tr>
+<tr>
+<td align="left"><code>skip_render</code></td>
+<td align="left">跳过指定文件的渲染。匹配到的文件将会被不做改动地复制到 <code>public</code> 目录中。您可使用 <a href="https://github.com/micromatch/micromatch#extended-globbing">glob 表达式</a>来匹配路径。</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h3 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>new_post_name</code></td>
+<td align="left">新文章的文件名称</td>
+<td align="left">:title.md</td>
+</tr>
+<tr>
+<td align="left"><code>default_layout</code></td>
+<td align="left">预设布局</td>
+<td align="left">post</td>
+</tr>
+<tr>
+<td align="left"><code>auto_spacing</code></td>
+<td align="left">在中文和英文之间加入空格</td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left"><code>titlecase</code></td>
+<td align="left">把标题转换为 title case</td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left"><code>external_link</code></td>
+<td align="left">在新标签中打开链接</td>
+<td align="left">true</td>
+</tr>
+<tr>
+<td align="left"><code>external_link.enable</code></td>
+<td align="left">在新标签中打开链接</td>
+<td align="left"><code>true</code></td>
+</tr>
+<tr>
+<td align="left"><code>external_link.field</code></td>
+<td align="left">对整个网站（<code>site</code>）生效或仅对文章（<code>post</code>）生效</td>
+<td align="left"><code>site</code></td>
+</tr>
+<tr>
+<td align="left"><code>external_link.exclude</code></td>
+<td align="left">需要排除的域名。主域名和子域名如 <code>www</code> 需分别配置</td>
+<td align="left"><code>[]</code></td>
+</tr>
+<tr>
+<td align="left"><code>filename_case</code></td>
+<td align="left">把文件名称转换为 (1) 小写或 (2) 大写</td>
+<td align="left">0</td>
+</tr>
+<tr>
+<td align="left"><code>render_drafts</code></td>
+<td align="left">显示草稿</td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left"><code>post_asset_folder</code></td>
+<td align="left">启动 <a href="https://hexo.io/zh-cn/docs/asset-folders">Asset 文件夹</a></td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left"><code>relative_link</code></td>
+<td align="left">把链接改为与根目录的相对位址</td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left"><code>future</code></td>
+<td align="left">显示未来的文章</td>
+<td align="left">true</td>
+</tr>
+<tr>
+<td align="left"><code>highlight</code></td>
+<td align="left">代码块的设置, 请参考 <a href="https://hexo.io/docs/syntax-highlight#Highlight-js">Highlight.js</a> 进行设置</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>prismjs</code></td>
+<td align="left">代码块的设置, 请参考 <a href="https://hexo.io/docs/syntax-highlight#PrismJS">PrismJS</a> 进行设置</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h3 id="分类-amp-标签"><a href="#分类-amp-标签" class="headerlink" title="分类 &amp; 标签"></a>分类 &amp; 标签</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">参数</td>
+<td align="left">描述</td>
+<td align="left">默认值</td>
+</tr>
+<tr>
+<td align="left"><code>default_category</code></td>
+<td align="left">默认分类</td>
+<td align="left"><code>uncategorized</code></td>
+</tr>
+<tr>
+<td align="left"><code>category_map</code></td>
+<td align="left">分类别名</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>tag_map</code></td>
+<td align="left">标签别名</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h3 id="日期-时间格式"><a href="#日期-时间格式" class="headerlink" title="日期 / 时间格式"></a>日期 / 时间格式</h3><p>Hexo 使用 <a href="http://momentjs.com/">Moment.js</a> 来解析和显示时间。</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>date_format</code></td>
+<td align="left">日期格式</td>
+<td align="left"><code>YYYY-MM-DD</code></td>
+</tr>
+<tr>
+<td align="left"><code>time_format</code></td>
+<td align="left">时间格式</td>
+<td align="left"><code>HH:mm:ss</code></td>
+</tr>
+<tr>
+<td align="left"><code>updated_option</code></td>
+<td align="left">当 Front Matter 中没有指定 <a href="https://hexo.io/zh-cn/docs/variables#页面变量"><code>updated</code></a> 时 <code>updated</code> 的取值</td>
+<td align="left"><code>mtime</code></td>
+</tr>
+</tbody></table>
+<h3 id="扩展（主题）"><a href="#扩展（主题）" class="headerlink" title="扩展（主题）"></a>扩展（主题）</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>theme</code></td>
+<td align="left">当前主题名称。值为<code>false</code>时禁用主题</td>
+</tr>
+<tr>
+<td align="left"><code>theme_config</code></td>
+<td align="left">主题的配置文件。在这里放置的配置会覆盖主题目录下的 <code>_config.yml</code> 中的配置</td>
+</tr>
+<tr>
+<td align="left"><code>deploy</code></td>
+<td align="left">部署部分的设置</td>
+</tr>
+<tr>
+<td align="left"><code>meta_generator</code></td>
+<td align="left"><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/meta#属性">Meta generator</a> 标签。 值为 <code>false</code> 时 Hexo 不会在头部插入该标签</td>
+</tr>
+</tbody></table>
+<h2 id="error"><a href="#error" class="headerlink" title="error"></a>error</h2><ul>
+<li>can`t deploy my hexo bu hexo-deployer-git,please help me #186</li>
+</ul>
+<p>but re-install <code>hexo-deployer-git</code> don’t work for me, but <code>npm install hexo-fs</code> work.</p>
+<ul>
+<li>页面报Uncaught TypeError: Cannot read property ‘match‘ of null</li>
+</ul>
+<p>主题不好使，换个主题就可以了</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2>
+      
+      <!-- 打赏 -->
+      
+      <div id="reward-btn">
+        打赏
+      </div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dxshelley.github.io/2021/12/15/hexo/" data-id="ckx92aynr0001ckm9bhgw7c09"
+        class="article-share-link">分享</a>
+        
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/" rel="tag">npm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BB%BA%E7%AB%99/" rel="tag">建站</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+    
+      <a href="/2021/12/04/npm-and-nodejs/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">npm配置与nodejs安装</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        notify: false,
+        verify: '',
+        app_id: 'WrFCXotwvwDOpWn1bacFcYfp-gzGzoHsz',
+        app_key: '8Drt2NufmQ9OMapLVa8XXPG8',
+        path: window.location.pathname,
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2021
+        DXShelley
+      </li>
+      <li>
+        
+          Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+      </li>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+    <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+      <aside class="sidebar">
+        <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Hello,World"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories/%E5%B7%A5%E5%85%B7%E8%B5%84%E6%BA%90">工具</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+      </aside>
+      <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~~~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+      
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+    strings: ['面朝大海·春暖花开','小鸡啄米·老牛反刍',''],
+    startDelay: 0,
+    typeSpeed: 200,
+    loop: true,
+    backSpeed: 100,
+    showCursor: true
+    });
+  } catch (err) {
+  }
+  
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer:'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+    onClick: (e) => {
+      $('.toc-link').removeClass('is-active-link');
+      $(`a[href=${e.target.hash}]`).addClass('is-active-link');
+      $(e.target.hash).scrollIntoView();
+      return false;
+    }
+  });
+</script>
+
+
+<script>
+  var ayerConfig = {
+    mathjax: false
+  }
+</script>
+
+
+<script src="/js/ayer.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+  </div>
+</body>
+
+</html>

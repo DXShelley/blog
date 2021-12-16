@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="description" content="每天进步一点点" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+     Hello,World
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<script src="/js/pace.min.js"></script>
+
+
+  
+
+  
+
+<link rel="alternate" href="/atom.xml" title="Hello,World" type="application/atom+xml">
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content">
+      
+<section class="cover">
+    
+      
+      <a class="forkMe" href="https://github.com/DXShelley"
+        target="_blank"><img width="149" height="149" src="/images/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="/images/cover1.jpg" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">Hello,World</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+<div id="main">
+  <section class="outer">
+  <article class="articles">
+    
+    
+    
+    
+    <article id="post-hexo" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/12/15/hexo/"
+    >hexo-github-搭建个人博客</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/12/15/hexo/" class="article-date">
+  <time datetime="2021-12-15T14:15:55.000Z" itemprop="datePublished">2021-12-15</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/web/">web</a> / <a class="article-category-link" href="/categories/web/framework/">framework</a> / <a class="article-category-link" href="/categories/web/framework/hexo/">hexo</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>布局（layout）</li>
+</ul>
+<p>Hexo 有三种默认布局：<code>post</code>、<code>page</code> 和 <code>draft</code>。在创建这三种不同类型的文件时，它们将会被保存到不同的路径；而您自定义的其他布局和 <code>post</code> 相同，都将储存到 <code>source/_posts</code> 文件夹。</p>
+<table>
+<thead>
+<tr>
+<th>布局</th>
+<th>路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>post</td>
+<td>source/_posts</td>
+</tr>
+<tr>
+<td>page</td>
+<td>source</td>
+</tr>
+<tr>
+<td>draft</td>
+<td>source/_draft</td>
+</tr>
+</tbody></table>
+<ul>
+<li>模版（Scaffold）</li>
+</ul>
+<p>在新建文章时，Hexo 会根据 <code>scaffolds</code> 文件夹内相对应的文件来建立文件，例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new photo <span class="string">"My Gallery"</span></span><br></pre></td></tr></table></figure>
+
+<p>在执行这行指令时，Hexo 会尝试在 <code>scaffolds</code> 文件夹中寻找 <code>photo.md</code>，并根据其内容建立文章。</p>
+<ul>
+<li>草稿（draft）</li>
+</ul>
+<p>这种布局在建立时会被保存到 <code>source/_drafts</code> 文件夹，您可通过 <code>publish</code> 命令将草稿移动到 <code>source/_posts</code> 文件夹，该命令的使用方式与 <code>new</code> 十分类似。</p>
+<ul>
+<li>资源文件夹</li>
+</ul>
+<p>资源（Asset）代表 <code>source</code> 文件夹中除了文章以外的所有文件，例如图片、CSS、JS 文件等。比方说，如果你的Hexo项目中只有少量图片，那最简单的方法就是将它们放在 <code>source/images</code> 文件夹中。然后通过类似于 <code>![](/images/image.jpg)</code> 的方法访问它们。</p>
+<p>对于那些想要更有规律地提供图片和其他资源以及想要将他们的资源分布在各个文章上的人来说，Hexo也提供了更组织化的方式来管理资源。这个稍微有些复杂但是管理资源非常方便的功能可以通过将 <code>config.yml</code> 文件中的 <code>post_asset_folder</code> 选项设为 <code>true</code> 来打开。</p>
+<p>当资源文件管理功能打开后，Hexo将会在你每一次通过 <code>hexo new [layout] &lt;title&gt;</code> 命令创建新文章时自动创建一个文件夹。这个资源文件夹将会有与这个文章文件一样的名字。将所有与你的文章有关的资源放在这个关联文件夹中之后，你可以通过相对路径来引用它们，这样你就得到了一个更简单而且方便得多的工作流。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在当前目录或指定目录下初始化网站</span></span><br><span class="line">$ hexo init [folder]</span><br><span class="line"><span class="comment"># 创建文章 您可以在命令中指定文章的布局（layout），默认为 post，可以通过修改 _config.yml 中的 default_layout 参数来指定默认布局</span></span><br><span class="line">$ hexo new [layout] &lt;title&gt;</span><br><span class="line">$ hexo new page --path about/me <span class="string">"About me"</span></span><br><span class="line"><span class="comment"># 生成静态文件 f相当于hexo clean</span></span><br><span class="line">$ hexo g -f -d --debug</span><br><span class="line"><span class="comment"># 启动服务器。默认情况下，访问网址为： http://localhost:4000/</span></span><br><span class="line">$ hexo s -p 5000 --debug</span><br><span class="line"><span class="comment"># 部署网站 -g部署之前预先生成静态文件</span></span><br><span class="line">$ hexo d -g --debug</span><br><span class="line"><span class="comment"># 清除缓存文件 (db.json) 和已生成的静态文件 (public)。在某些情况（尤其是更换主题后），如果发现您对站点的更改无论如何也不生效，您可能需要运行该命令。</span></span><br><span class="line">$ hexo clean</span><br><span class="line"><span class="comment"># 列出网站资料</span></span><br><span class="line">$ hexo list &lt;<span class="built_in">type</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="写作"><a href="#写作" class="headerlink" title="写作"></a>写作</h3><h4 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h4><p>Front-matter 是文件最上方以 <code>---</code> 分隔的区域，用于指定个别文件的变量，举例来说：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: Hello World</span><br><span class="line">date: 2013/7/13 20:46:25</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">- </span>Diary</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">- </span>PS3</span><br><span class="line"><span class="bullet">- </span>Games</span><br><span class="line">---</span><br><span class="line">参数	描述	默认值</span><br><span class="line">layout	布局	config.default_layout</span><br><span class="line">title	标题	文章的文件名</span><br><span class="line">date	建立日期	文件建立日期</span><br><span class="line">updated	更新日期	文件更新日期</span><br><span class="line">comments	开启文章的评论功能	true</span><br><span class="line">tags	标签（不适用于分页）	</span><br><span class="line">categories	分类（不适用于分页）	</span><br><span class="line">permalink	覆盖文章网址	</span><br><span class="line">excerpt	Page excerpt in plain text. Use this plugin to format the text	</span><br><span class="line">disableNunjucks	Disable rendering of Nunjucks tag &#123;&#123; &#125;&#125;/&#123;% %&#125; and tag plugins when enabled	</span><br><span class="line">lang	Set the language to override auto-detection	Inherited from _config.yml</span><br></pre></td></tr></table></figure>
+
+<h4 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h4><p>只有文章支持分类和标签，您可以在 Front-matter 中设置。在其他系统中，分类和标签听起来很接近，但是在 Hexo 中两者有着明显的差别：分类具有顺序性和层次性，也就是说 <code>Foo, Bar</code> 不等于 <code>Bar, Foo</code>；而标签没有顺序和层次。具体参考上边。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 会使分类Life成为Diary的子分类，而不是并列分类。因此，有必要为您的文章选择尽可能准确的分类。</span></span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">  - </span>Diary</span><br><span class="line"><span class="bullet">  - </span>Life</span><br><span class="line"> </span><br><span class="line"> # 如果你需要为文章添加多个分类，可以尝试以下 list 中的方法。</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">- </span>[Diary, PlayStation]</span><br><span class="line"><span class="bullet">- </span>[Diary, Games]</span><br><span class="line"><span class="bullet">- </span>[Life]</span><br><span class="line"><span class="section"># 此时这篇文章同时包括三个分类： PlayStation 和 Games 分别都是父分类 Diary 的子分类，同时 Life 是一个没有子分类的分类。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="一键部署"><a href="#一键部署" class="headerlink" title="一键部署"></a>一键部署</h3><ol>
+<li>安装 <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改配置</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">&lt;repository</span> <span class="string">url&gt;</span> <span class="comment">#https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">[branch]</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">[message]</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>生成站点文件并推送至远程库</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="网站"><a href="#网站" class="headerlink" title="网站"></a>网站</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>title</code></td>
+<td align="left">网站标题</td>
+</tr>
+<tr>
+<td align="left"><code>subtitle</code></td>
+<td align="left">网站副标题</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left">网站描述</td>
+</tr>
+<tr>
+<td align="left"><code>keywords</code></td>
+<td align="left">网站的关键词。支持多个关键词。</td>
+</tr>
+<tr>
+<td align="left"><code>author</code></td>
+<td align="left">您的名字</td>
+</tr>
+<tr>
+<td align="left"><code>language</code></td>
+<td align="left">网站使用的语言。对于简体中文用户来说，使用不同的主题可能需要设置成不同的值，请参考你的主题的文档自行设置，常见的有 <code>zh-Hans</code>和 <code>zh-CN</code>。</td>
+</tr>
+<tr>
+<td align="left"><code>timezone</code></td>
+<td align="left">网站时区。Hexo 默认使用您电脑的时区。请参考 <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">时区列表</a> 进行设置，如 <code>America/New_York</code>, <code>Japan</code>, 和 <code>UTC</code> 。一般的，对于中国大陆地区可以使用 <code>Asia/Shanghai</code>。</td>
+</tr>
+</tbody></table>
+<h3 id="网址"><a href="#网址" class="headerlink" title="网址"></a>网址</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>url</code></td>
+<td align="left">网址, 必须以 <code>http://</code> 或 <code>https://</code> 开头</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>root</code></td>
+<td align="left">网站根目录</td>
+<td align="left"><code>url&#39;s pathname</code></td>
+</tr>
+<tr>
+<td align="left"><code>permalink</code></td>
+<td align="left">文章的 <a href="https://hexo.io/zh-cn/docs/permalinks">永久链接</a> 格式</td>
+<td align="left"><code>:year/:month/:day/:title/</code></td>
+</tr>
+<tr>
+<td align="left"><code>permalink_defaults</code></td>
+<td align="left">永久链接中各部分的默认值</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>pretty_urls</code></td>
+<td align="left">改写 <a href="https://hexo.io/zh-cn/docs/variables"><code>permalink</code></a> 的值来美化 URL</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>pretty_urls.trailing_index</code></td>
+<td align="left">是否在永久链接中保留尾部的 <code>index.html</code>，设置为 <code>false</code> 时去除</td>
+<td align="left"><code>true</code></td>
+</tr>
+<tr>
+<td align="left"><code>pretty_urls.trailing_html</code></td>
+<td align="left">是否在永久链接中保留尾部的 <code>.html</code>, 设置为 <code>false</code> 时去除 (<em>对尾部的 <code>index.html</code>无效</em>)</td>
+<td align="left"><code>true</code></td>
+</tr>
+</tbody></table>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>source_dir</code></td>
+<td align="left">资源文件夹，这个文件夹用来存放内容。</td>
+<td align="left"><code>source</code></td>
+</tr>
+<tr>
+<td align="left"><code>public_dir</code></td>
+<td align="left">公共文件夹，这个文件夹用于存放生成的站点文件。</td>
+<td align="left"><code>public</code></td>
+</tr>
+<tr>
+<td align="left"><code>tag_dir</code></td>
+<td align="left">标签文件夹</td>
+<td align="left"><code>tags</code></td>
+</tr>
+<tr>
+<td align="left"><code>archive_dir</code></td>
+<td align="left">归档文件夹</td>
+<td align="left"><code>archives</code></td>
+</tr>
+<tr>
+<td align="left"><code>category_dir</code></td>
+<td align="left">分类文件夹</td>
+<td align="left"><code>categories</code></td>
+</tr>
+<tr>
+<td align="left"><code>code_dir</code></td>
+<td align="left">Include code 文件夹，<code>source_dir</code> 下的子目录</td>
+<td align="left"><code>downloads/code</code></td>
+</tr>
+<tr>
+<td align="left"><code>i18n_dir</code></td>
+<td align="left">国际化（i18n）文件夹</td>
+<td align="left"><code>:lang</code></td>
+</tr>
+<tr>
+<td align="left"><code>skip_render</code></td>
+<td align="left">跳过指定文件的渲染。匹配到的文件将会被不做改动地复制到 <code>public</code> 目录中。您可使用 <a href="https://github.com/micromatch/micromatch#extended-globbing">glob 表达式</a>来匹配路径。</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h3 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>new_post_name</code></td>
+<td align="left">新文章的文件名称</td>
+<td align="left">:title.md</td>
+</tr>
+<tr>
+<td align="left"><code>default_layout</code></td>
+<td align="left">预设布局</td>
+<td align="left">post</td>
+</tr>
+<tr>
+<td align="left"><code>auto_spacing</code></td>
+<td align="left">在中文和英文之间加入空格</td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left"><code>titlecase</code></td>
+<td align="left">把标题转换为 title case</td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left"><code>external_link</code></td>
+<td align="left">在新标签中打开链接</td>
+<td align="left">true</td>
+</tr>
+<tr>
+<td align="left"><code>external_link.enable</code></td>
+<td align="left">在新标签中打开链接</td>
+<td align="left"><code>true</code></td>
+</tr>
+<tr>
+<td align="left"><code>external_link.field</code></td>
+<td align="left">对整个网站（<code>site</code>）生效或仅对文章（<code>post</code>）生效</td>
+<td align="left"><code>site</code></td>
+</tr>
+<tr>
+<td align="left"><code>external_link.exclude</code></td>
+<td align="left">需要排除的域名。主域名和子域名如 <code>www</code> 需分别配置</td>
+<td align="left"><code>[]</code></td>
+</tr>
+<tr>
+<td align="left"><code>filename_case</code></td>
+<td align="left">把文件名称转换为 (1) 小写或 (2) 大写</td>
+<td align="left">0</td>
+</tr>
+<tr>
+<td align="left"><code>render_drafts</code></td>
+<td align="left">显示草稿</td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left"><code>post_asset_folder</code></td>
+<td align="left">启动 <a href="https://hexo.io/zh-cn/docs/asset-folders">Asset 文件夹</a></td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left"><code>relative_link</code></td>
+<td align="left">把链接改为与根目录的相对位址</td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left"><code>future</code></td>
+<td align="left">显示未来的文章</td>
+<td align="left">true</td>
+</tr>
+<tr>
+<td align="left"><code>highlight</code></td>
+<td align="left">代码块的设置, 请参考 <a href="https://hexo.io/docs/syntax-highlight#Highlight-js">Highlight.js</a> 进行设置</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>prismjs</code></td>
+<td align="left">代码块的设置, 请参考 <a href="https://hexo.io/docs/syntax-highlight#PrismJS">PrismJS</a> 进行设置</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h3 id="分类-amp-标签"><a href="#分类-amp-标签" class="headerlink" title="分类 &amp; 标签"></a>分类 &amp; 标签</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">参数</td>
+<td align="left">描述</td>
+<td align="left">默认值</td>
+</tr>
+<tr>
+<td align="left"><code>default_category</code></td>
+<td align="left">默认分类</td>
+<td align="left"><code>uncategorized</code></td>
+</tr>
+<tr>
+<td align="left"><code>category_map</code></td>
+<td align="left">分类别名</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>tag_map</code></td>
+<td align="left">标签别名</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h3 id="日期-时间格式"><a href="#日期-时间格式" class="headerlink" title="日期 / 时间格式"></a>日期 / 时间格式</h3><p>Hexo 使用 <a href="http://momentjs.com/">Moment.js</a> 来解析和显示时间。</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>date_format</code></td>
+<td align="left">日期格式</td>
+<td align="left"><code>YYYY-MM-DD</code></td>
+</tr>
+<tr>
+<td align="left"><code>time_format</code></td>
+<td align="left">时间格式</td>
+<td align="left"><code>HH:mm:ss</code></td>
+</tr>
+<tr>
+<td align="left"><code>updated_option</code></td>
+<td align="left">当 Front Matter 中没有指定 <a href="https://hexo.io/zh-cn/docs/variables#页面变量"><code>updated</code></a> 时 <code>updated</code> 的取值</td>
+<td align="left"><code>mtime</code></td>
+</tr>
+</tbody></table>
+<h3 id="扩展（主题）"><a href="#扩展（主题）" class="headerlink" title="扩展（主题）"></a>扩展（主题）</h3><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>theme</code></td>
+<td align="left">当前主题名称。值为<code>false</code>时禁用主题</td>
+</tr>
+<tr>
+<td align="left"><code>theme_config</code></td>
+<td align="left">主题的配置文件。在这里放置的配置会覆盖主题目录下的 <code>_config.yml</code> 中的配置</td>
+</tr>
+<tr>
+<td align="left"><code>deploy</code></td>
+<td align="left">部署部分的设置</td>
+</tr>
+<tr>
+<td align="left"><code>meta_generator</code></td>
+<td align="left"><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/meta#属性">Meta generator</a> 标签。 值为 <code>false</code> 时 Hexo 不会在头部插入该标签</td>
+</tr>
+</tbody></table>
+<h2 id="error"><a href="#error" class="headerlink" title="error"></a>error</h2><ul>
+<li>can`t deploy my hexo bu hexo-deployer-git,please help me #186</li>
+</ul>
+<p>but re-install <code>hexo-deployer-git</code> don’t work for me, but <code>npm install hexo-fs</code> work.</p>
+<ul>
+<li>页面报Uncaught TypeError: Cannot read property ‘match‘ of null</li>
+</ul>
+<p>主题不好使，换个主题就可以了</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2>
+      
+      <!-- 打赏 -->
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dxshelley.github.io/2021/12/15/hexo/" data-id="ckx92aynr0001ckm9bhgw7c09"
+        class="article-share-link">分享</a>
+        
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/" rel="tag">npm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BB%BA%E7%AB%99/" rel="tag">建站</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-npm-and-nodejs" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/12/04/npm-and-nodejs/"
+    >npm配置与nodejs安装</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/12/04/npm-and-nodejs/" class="article-date">
+  <time datetime="2021-12-04T14:28:49.000Z" itemprop="datePublished">2021-12-04</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/web%E5%89%8D%E7%AB%AF/">web前端</a> / <a class="article-category-link" href="/categories/web%E5%89%8D%E7%AB%AF/js/">js</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="nodejs"><a href="#nodejs" class="headerlink" title="nodejs"></a>nodejs</h1><h1 id="npm-（Node-Packaged-Modules）"><a href="#npm-（Node-Packaged-Modules）" class="headerlink" title="npm （Node Packaged Modules）"></a>npm （Node Packaged Modules）</h1><h2 id="config"><a href="#config" class="headerlink" title="config"></a>config</h2><h3 id="npm从以下来源获取配置值，按优先级排序"><a href="#npm从以下来源获取配置值，按优先级排序" class="headerlink" title="npm从以下来源获取配置值，按优先级排序"></a>npm从以下来源获取配置值，按优先级排序</h3><h5 id="命令行标记"><a href="#命令行标记" class="headerlink" title="命令行标记"></a>命令行标记</h5><p>在命令行上放置<code>--foo bar</code>设置<code>foo</code>配置参数为<code>bar</code>。 一个 <code>--</code> 参数(argument)告诉cli解析器停止读取flags.一个 在命令行结尾的<code>--flag</code>参数(parameter)的值将会是<code>true</code>.</p>
+<h5 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h5><p>任何以<code>npm_config_</code>开始的环境变量都会作为配置参数解读。在环境里设置<code>npm_config_foo=bar</code>将会设置<code>foo</code>配置参数为<code>bar</code>。任何没有值的环境配置将会默认为<code>true</code>。配置值是不区分大小写的，所以<code>NPM_CONFIG_FOO=bar</code>的结果一样</p>
+<h3 id="npm获取配置有6种方式，优先级由高到低"><a href="#npm获取配置有6种方式，优先级由高到低" class="headerlink" title="npm获取配置有6种方式，优先级由高到低"></a>npm获取配置有6种方式，优先级由高到低</h3><ol>
+<li>命令行参数。 <code>--proxy http://server:port</code>即将proxy的值设为<code>http://server:port</code>。</li>
+<li>环境变量。 以<code>npm_config_</code>为前缀的环境变量将会被认为是npm的配置属性。如设置proxy可以加入这样的环境变量<code>npm_config_proxy=http://server:port</code>。</li>
+<li>用户配置文件。可以通过<code>npm config get userconfig</code>查看文件路径。如果是mac系统的话默认路径就是<code>$HOME/.npmrc</code>。</li>
+<li>全局配置文件。可以通过<code>npm config get globalconfig</code>查看文件路径。mac系统的默认路径是<code>/usr/local/etc/npmrc</code>。</li>
+<li>内置配置文件。安装npm的目录下的npmrc文件。</li>
+<li>默认配置。 npm本身有默认配置参数，如果以上5条都没设置，则npm会使用默认配置参数。</li>
+</ol>
+<ul>
+<li>npm修改全局包安装路径</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> prefix <span class="string">'X:\yourpath\nodejs\npm_global'</span></span><br><span class="line">npm config <span class="built_in">set</span> cache <span class="string">'X:\yourpath\nodejs\npm_cache'</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>针对npm配置的命令行操作</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> &lt;key&gt; &lt;value&gt; [--global]</span><br><span class="line">npm config get &lt;key&gt;</span><br><span class="line">npm config delete &lt;key&gt;</span><br><span class="line">npm config list</span><br><span class="line">npm config edit</span><br><span class="line">npm get &lt;key&gt;</span><br><span class="line">npm <span class="built_in">set</span> &lt;key&gt; &lt;value&gt; [--global]</span><br></pre></td></tr></table></figure>
+
+<p>在设置配置属性时属性值默认是被存储于用户配置文件中，如果加上<code>--global</code>，则被存储在全局配置文件中。</p>
+<p>如果要查看npm的所有配置属性（包括默认配置），可以使用<code>npm config ls -l</code>。</p>
+<p>如果要查看npm的各种配置的含义，可以使用<code>npm help config</code>。</p>
+<p><code>npm config edit</code>会将默认配置复制到目标配置文件，并用系统默认编辑器打开，让用户编辑。<code>npm config edit</code>可以进行<strong>用户配置</strong>，也可以进行<strong>全局配置</strong>（加<code>-g</code>选项）。</p>
+<blockquote>
+<p><strong>项目配置</strong>必须自己编辑<code>/path/to/my/project/.npmrc</code>文件</p>
+</blockquote>
+<ul>
+<li>为npm设置代理</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm config <span class="built_in">set</span> proxy http://username:password@server:port</span><br><span class="line">$ npm config <span class="built_in">set</span> https-proxy http://username:pawword@server:port</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>换源</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
+
+<h1 id="use"><a href="#use" class="headerlink" title="use"></a>use</h1><h3 id="npm本地安装与全局安装有什么区别？"><a href="#npm本地安装与全局安装有什么区别？" class="headerlink" title="npm本地安装与全局安装有什么区别？"></a>npm本地安装与全局安装有什么区别？</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install grunt // 本地安装，则是将模块下载到当前命令行所在目录。</span><br><span class="line">npm install -g grunt//全局安装，模块将被下载安装到【全局目录】中；</span><br><span class="line">【npm install xxx –save】 安装并写入package.json的”dependencies”中</span><br><span class="line">【npm install xxx –save-dev】安装并写入package.json的”devDependencies”中</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除依赖"><a href="#删除依赖" class="headerlink" title="删除依赖"></a>删除依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">【npm uninstall xxx】删除xxx依赖</span><br><span class="line">【npm uninstall xxx -g】删除全局依赖xxx</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用npm-init初始化项目"><a href="#使用npm-init初始化项目" class="headerlink" title="使用npm init初始化项目"></a>使用npm init初始化项目</h3><p>在node开发中使用npm init会生成一个pakeage.json文件，这个文件主要是用来记录这个项目的详细信息的，它会将我们在项目开发中所要用到的包，以及项目的详细信息等记录在这个项目中。方便在以后的版本迭代和项目移植的时候会更加的方便。也是防止在后期的项目维护中误删除了一个包导致的项目不能够正常运行。使用npm init初始化项目还有一个好处就是在进行项目传递的时候不需要将项目依赖包一起发送给对方，对方在接受到你的项目之后再执行npm install就可以将项目依赖全部下载到项目里。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">PS F:\MyBlog&gt; npm init</span><br><span class="line">This utility will walk you through creating a package.json file.</span><br><span class="line">It only covers the most common items, and tries to guess sensible defaults.</span><br><span class="line"></span><br><span class="line">See `npm help init` for definitive documentation on these fields</span><br><span class="line">and exactly what they do.</span><br><span class="line"></span><br><span class="line">Use `npm install &lt;pkg&gt;` afterwards to install a package and</span><br><span class="line">save it as a dependency in the package.json file.</span><br><span class="line"></span><br><span class="line">Press ^C at any time to quit.</span><br><span class="line">package name: (myblog)</span><br><span class="line">version: (1.0.0)</span><br><span class="line">description:</span><br><span class="line">entry point: (index.js)</span><br><span class="line">test command:</span><br><span class="line">git repository:</span><br><span class="line">keywords:</span><br><span class="line">author:</span><br><span class="line">license: (ISC)</span><br><span class="line">About to write to F:\MyBlog\package.json:</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  "name": "myblog",</span><br><span class="line">  "version": "1.0.0",</span><br><span class="line">  "description": "",</span><br><span class="line">  "main": "index.js",</span><br><span class="line">  "scripts": &#123;</span><br><span class="line">    "test": "echo \"Error: no test specified\" &amp;&amp; exit 1"</span><br><span class="line">  &#125;,</span><br><span class="line">  "author": "",</span><br><span class="line">  "license": "ISC"</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Is this OK? (yes)</span><br><span class="line">PS F:\MyBlog&gt;</span><br><span class="line">PS F:\MyBlog&gt;</span><br></pre></td></tr></table></figure>
+
+<p>package name:                      你的项目名字叫啥<br>version:                          版本号<br>description:                       对项目的描述<br>entry point:                      项目的入口文件（一般你要用那个js文件作为node服务，就填写那个文件）<br>test command:                     项目启动的时候要用什么命令来执行脚本文件（默认为node app.js）<br>git repository:                    如果你要将项目上传到git中的话，那么就需要填写git的仓库地址（这里就不写地址了）<br>keywirds：                       项目关键字（我也不知道有啥用，所以我就不写了）<br>author:                         作者的名字（也就是你叫啥名字）<br>license:                        发行项目需要的证书（这里也就自己玩玩，就不写了）</p>
+<h1 id="error"><a href="#error" class="headerlink" title="error"></a>error</h1><ul>
+<li>Error: EINVAL: invalid argument, mkdir ‘C:\Users\25433&#39;C:\Users\25433\AppData\Roaming\npm’’</li>
+</ul>
+
+      
+      <!-- 打赏 -->
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dxshelley.github.io/2021/12/04/npm-and-nodejs/" data-id="ckx92aynu0003ckm9d28w7iuo"
+        class="article-share-link">分享</a>
+        
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/" rel="tag">npm</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-测试git" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/09/24/%E6%B5%8B%E8%AF%95git/"
+    >git</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/09/24/%E6%B5%8B%E8%AF%95git/" class="article-date">
+  <time datetime="2020-09-24T01:55:40.000Z" itemprop="datePublished">2020-09-24</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="git"><a href="#git" class="headerlink" title="git"></a>git</h1><h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ul>
+<li>实现git普通基本操作</li>
+<li>实现git分支创建、合并和冲突解决</li>
+<li>能规范使用git用于版本控制和发布</li>
+</ul>
+<h2 id="git基本概念"><a href="#git基本概念" class="headerlink" title="git基本概念"></a>git基本概念</h2><h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2>
+      
+      <!-- 打赏 -->
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dxshelley.github.io/2020/09/24/%E6%B5%8B%E8%AF%95git/" data-id="ckx92ayo2000ackm9fms74rp4"
+        class="article-share-link">分享</a>
+        
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/" rel="tag">git</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-web-framework-test" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/02/06/web-framework-test/"
+    >测试分类和标签使用</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/02/06/web-framework-test/" class="article-date">
+  <time datetime="2020-02-06T09:51:50.000Z" itemprop="datePublished">2020-02-06</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/web/">web</a> / <a class="article-category-link" href="/categories/web/framework/">framework</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      
+      
+      <!-- 打赏 -->
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dxshelley.github.io/2020/02/06/web-framework-test/" data-id="ckx92aypv000zckm9etyf1ayh"
+        class="article-share-link">分享</a>
+        
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B5%8B%E8%AF%95/" rel="tag">测试</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-我的博客" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/02/06/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/"
+    >我的博客</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/02/06/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/" class="article-date">
+  <time datetime="2020-02-06T03:32:49.000Z" itemprop="datePublished">2020-02-06</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/web%E5%89%8D%E7%AB%AF/">web前端</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="我的博客"><a href="#我的博客" class="headerlink" title="我的博客"></a>我的博客</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4>
+      
+      <!-- 打赏 -->
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dxshelley.github.io/2020/02/06/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/" data-id="ckx92ayny0007ckm99j7z5m79"
+        class="article-share-link">分享</a>
+        
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tag4/" rel="tag">tag4</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+  </article>
+  
+
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2021
+        DXShelley
+      </li>
+      <li>
+        
+          Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+      </li>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+    <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+      <aside class="sidebar">
+        <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Hello,World"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories/%E5%B7%A5%E5%85%B7%E8%B5%84%E6%BA%90">工具</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+      </aside>
+      <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~~~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+      
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+    strings: ['面朝大海·春暖花开','小鸡啄米·老牛反刍',''],
+    startDelay: 0,
+    typeSpeed: 200,
+    loop: true,
+    backSpeed: 100,
+    showCursor: true
+    });
+  } catch (err) {
+  }
+  
+</script>
+
+
+
+
+<script>
+  var ayerConfig = {
+    mathjax: false
+  }
+</script>
+
+
+<script src="/js/ayer.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+  </div>
+</body>
+
+</html>
