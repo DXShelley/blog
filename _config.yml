@@ -23,7 +23,7 @@ pretty_urls:
 
 # Directory
 source_dir: source
-public_dir: docs
+public_dir: public
 tag_dir: tags
 archive_dir: archives
 category_dir: categories
@@ -123,5 +123,7 @@ feed:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/DXShelley/DXShelley.github.io.git
+  #repo: https://github.com/DXShelley/DXShelley.github.io.git
+  #repo: https://gitee.com/dxshelley/home.git
+  repo: https://gitee.com/dxshelley/dxshelley.git
   branch: master
