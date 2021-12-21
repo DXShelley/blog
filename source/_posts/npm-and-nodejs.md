@@ -11,6 +11,10 @@ categories:
 
 # nodejs
 
+## 安装
+
+windows下只能下载新版本重新安装
+
 
 
 # npm （Node Packaged Modules）
