@@ -49,7 +49,9 @@ Specific to docx4j (as opposed to pptx4j, xlsx4j):
 • Diff/compare documents, paragraphs or sdt (content controls) 
 • Font support (font substitution, and use of any fonts embedded in the document) 
 
-# USE
+
+
+# use
 
 - 合并文档(带分页符)
 
@@ -140,7 +142,25 @@ public class MergeUtil {
 
 ![image-20211027104011521](docx4j/image-20211027104011521.png)
 
-## link
+
+
+# FAQ
+
+- word中占位符无法替换，例如：${name}.
+
+先选中单元格全部，然后使用del按钮多删除几遍，复制过去${name}。
+
+使用word本身，审阅——拼写和语法检查 功能，全部忽略或加入字典即可。
+
+- word打开报错
+
+![image-20211224113947057](docx4j/image-20211224113947057.png)
+
+![image-20211224114002560](docx4j/image-20211224114002560.png)
+
+大概率是文档本身问题，使用wps或word修改文档。例如：文档使用wps做的，office打不开，解决办法就是用wps打开然后他自带的格式转换一下，就正常了。
+
+## References
 
 [ Download docx4j](https://www.docx4java.org/downloads.html)
 
@@ -150,5 +170,7 @@ public class MergeUtil {
 
 [ecma376](http://webapp.docx4java.org/OnlineDemo/ecma376/WordML/index.html)
 
-View the structure of your docx/xsx/pptx, and generate code via our [webapp](http://webapp.docx4java.org/OnlineDemo/PartsList.html) or for docx, locally with our [Word AddIn](
+View the structure of your docx/xsx/pptx, and generate code via our [webapp](http://webapp.docx4java.org/OnlineDemo/PartsList.html) or for docx, locally with our [Word AddIn](https://docx4java.org/docx4j/Docx4j_Helper_8-2-1-1.exe?_ga=2.247814607.99579074.1640152856-2096778395.1640152856)
+
+[测试文件](docx4j/TestDocEN.docx)
 
