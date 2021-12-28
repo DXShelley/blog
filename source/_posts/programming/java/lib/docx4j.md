@@ -162,7 +162,9 @@ public class MergeUtil {
 
 ## References
 
-[ Download docx4j](https://www.docx4java.org/downloads.html)
+[ Download docx4j:one:](https://www.docx4java.org/downloads.html)
+
+[github](https://github.com/plutext/docx4j)
 
 [ Open XML spec documentation ] (http://webapp.docx4java.org/OnlineDemo/ecma376/index.html) 
 
@@ -173,4 +175,12 @@ public class MergeUtil {
 View the structure of your docx/xsx/pptx, and generate code via our [webapp](http://webapp.docx4java.org/OnlineDemo/PartsList.html) or for docx, locally with our [Word AddIn](https://docx4java.org/docx4j/Docx4j_Helper_8-2-1-1.exe?_ga=2.247814607.99579074.1640152856-2096778395.1640152856)
 
 [测试文件](docx4j/TestDocEN.docx)
+
+[使用docx4j创建表](https://stackoverflow.com/questions/19958476/create-table-with-docx4j)
+
+
+
+[docx4j插入分页符:one:](https://stackoom.com/question/1xB39)
+
+[利用docx4j来处理word的合并与拆分:one:](https://www.jianshu.com/p/34a38bcaffee)
 

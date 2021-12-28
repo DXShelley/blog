@@ -4,7 +4,7 @@ tags:
   - source
   - summary
 categories:
-  - 未分类
+  - sources
 date: 2021-12-27 19:49:46
 ---
 
@@ -12,9 +12,13 @@ date: 2021-12-27 19:49:46
 
 # 全（blog）
 
-[java全栈知识体系](https://www.pdai.tech/)
+[java全栈知识体系:one:](https://www.pdai.tech/)
 
-[](http://xinyeshuaiqi.cn/)
+[博客1:two:](http://xinyeshuaiqi.cn/)
+
+[牛客网:one:](https://www.nowcoder.com/)
+
+[架构师必看:two:](https://javajgs.com/code/java)
 
 ## 数据结构与算法
 
@@ -26,5 +30,5 @@ date: 2021-12-27 19:49:46
 
 [数据结构与算法系列](https://www.cnblogs.com/skywang12345/p/3603935.html)
 
-
+[数据结构动画展示](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
 

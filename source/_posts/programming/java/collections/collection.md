@@ -5,7 +5,9 @@ tags:
   - collections
   - programming
 categories:
-  - 未分类
+  - programming
+  - java
+  - collections
 date: 2021-12-27 19:35:00
 ---
 
