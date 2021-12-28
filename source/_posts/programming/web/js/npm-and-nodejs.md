@@ -1,12 +1,13 @@
 ---
 title: npm配置与nodejs安装
-date: 2021-12-04 22:28:49
 tags:
-- nodejs
-- npm
-categories: 
-- web前端
-- js
+  - nodejs
+  - npm
+categories:
+  - programming
+  - web
+  - js
+date: 2021-12-04 22:28:49
 ---
 
 # nodejs
