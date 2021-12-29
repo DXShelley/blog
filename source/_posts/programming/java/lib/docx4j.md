@@ -136,6 +136,22 @@ public class MergeUtil {
 }
 ```
 
+合并文档步骤：
+
+1. Load our initial file in `WordprocessingMLPackage` (this is the file where we want to attach the rest of the files, so in the end they look as one)
+2. Create unique section template
+3. Reset sections (this will serve the purpose of removing all references from the existing template, remember that section defines page layout)
+4. Remove body section (we can add this in the end)
+5. Loop through the attachment files (if you do not have sections separating pages, you might add page breaks)
+6. Copy relationships that you are interested in
+7. Copy elements
+8. If you do not want page breaks, then you can add empty section
+9. Add body section
+10. Reapply all headers and footers to empty sections
+
+
+This all might sound complicated, but in the end, once you get to know the structure of the `WordprocessingMLPackage`, it becomes easier.
+
 
 
 ## cheat sheet
@@ -183,4 +199,8 @@ View the structure of your docx/xsx/pptx, and generate code via our [webapp](htt
 [docx4j插入分页符:one:](https://stackoom.com/question/1xB39)
 
 [利用docx4j来处理word的合并与拆分:one:](https://www.jianshu.com/p/34a38bcaffee)
+
+
+
+[在线测试合并文件:one:](http://webapp.docx4java.org/OnlineDemo/forms/upload_MergeDocx.xhtml)
 

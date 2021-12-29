@@ -20,6 +20,12 @@ date: 2021-12-27 19:49:46
 
 [架构师必看:two:](https://javajgs.com/code/java)
 
+[美团技术团队:one:](https://tech.meituan.com/)
+
+[综合1:two:](https://www.jdon.com/)
+
+[博客2:two:](https://www.tpvlog.com/)
+
 ## 数据结构与算法
 
 
