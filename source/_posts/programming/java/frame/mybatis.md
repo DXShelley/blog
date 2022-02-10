@@ -53,7 +53,82 @@ MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过�
 
 
 
+## 技巧
+
+### Mybatis include入参实现sql可复用
+
+```xml
+ <select id="selectById" resultMap="BaseResultMap">
+        select
+            my.*
+        FROM
+            sys_user my
+        <include refid="test_where"/>
+    </select>
+
+    <sql id="test_where">
+        WHERE
+            my.id = 1
+    </sql>
+    -- 执行结果：select my.* FROM sys_user my WHERE my.id = 1
+```
+
+通过property标签动态传参，使用时用 ${PROPERTY_NAME}.
+
+在 if 等标签和代码段中都可使用.
+
+注意：
+mybatis中有两种传入动态参数的方式：#{}和${}
+#{} 占位符：对传入的参数会做预编译，也就是会当做字符串来处理
+
+${} 拼接符：对传入的参数不会做任何的处理，也就是说传递什么就是什么
+举例：
+
+1. select * from sys_user where id = #{id} and name = #{name}
+最后执行的sql：select * from sys_user where id = ‘1’ and name = ‘zhangsan’
+2. select * from sys_user where id = ${id} and name = ${name}
+最后执行的sql：select * from sys_user where id = 1 and name = zhangsan (这里zhangsan没有单引号，因此会报错。如果需要加单引号，则需要手动在传参时传入。)
+
+### ognl表达式测试
+
+OGNL 是 Object-Graph Navigation Language 的缩写，对象-图行导航语言，语法为：#{ }。
+
+OGNL 作用是在对象和视图之间做数据的交互，可以存取对象的属性和调用对象的方法，通过表达式可以迭代出整个对象的结构图。
+
+MyBatis常用OGNL表达式如下:
+
+![img](mybatis/12518786-ae0c-4aa9-8ce2-32b72b50b584.png)
+
+```java
+
+       // 构建一个OgnlContext对象
+       OgnlContext context = (OgnlContext) Ognl.createDefaultContext(this,
+               new DefaultClassResolver(),
+               new DefaultTypeConverter(),
+               new DefaultMemberAccess(true));
+
+       Map<String,Object> hashMap=new HashMap<>(1);
+       hashMap.put("name", "aa");
+       context.setRoot(hashMap);
+       String expression="name =='aa'";
+       try {
+           Boolean flag = (Boolean) Ognl.getValue(expression, context, context.getRoot());
+           System.out.println(flag);
+       } catch (OgnlException e) {
+           e.printStackTrace();
+       }
+
+
+```
+
+
+
 ## 参考
 
 [官档](https://mybatis.org/mybatis-3/zh/getting-started.html)
 
+[github](https://github.com/mybatis/mybatis-3)
+
+[博客1](https://www.cnblogs.com/homejim/)
+
+[mybatis教程](https://blog.51cto.com/legend2011/category5.html)

@@ -95,6 +95,8 @@ Activiti用 Execution 去描述流程执行的每一个节点。在没有并发�
 
 对应 act_ru_variable 和 act_hi_varinst 表。
 
+Currently conditionalExpressions can **only be used with UEL**, detailed info about these can be found in section [Expressions](https://www.activiti.org/userguide/6.latest/index.html#apiExpressions). The expression used should resolve to a boolean value, otherwise an exception is thrown while evaluating the condition.
+
 ### 数据库相关
 
 ```
@@ -639,6 +641,8 @@ hibernate.dialect=org.hibernate.dialect.MySQLDialect
 [bpmn2.0规范](https://www.omg.org/spec/BPMN/)
 
 [bpmn2.0小本本](https://cloud.trisotech.com/bpmnquickguide/)
+
+[bpmn2.0pdf](https://www.omg.org/spec/BPMN/2.0.2/PDF)
 
 ## 问题
 
