@@ -73,6 +73,8 @@ date: 2022-02-21 21:49:08
 
 **分** 表示平分的意思。春分/秋分表示昼夜等长。平分昼夜。
 
+![image-20220228222750932](astronomy/image-20220228222750932.png)
+
 ## 天干地支纪年法
 
 **天干地支**是[十干](https://zh.wikipedia.org/wiki/天干)与[十二支](https://zh.wikipedia.org/wiki/地支)的合称、简通称为**十天干十二地支**，由两者经一定的[组合方式](https://zh.wikipedia.org/wiki/組合數學)搭配成六十对，为一个周期，循环往复，称为**[六十甲子](https://zh.wikipedia.org/wiki/還曆)**或**六十花甲子年**。
