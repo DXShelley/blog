@@ -267,6 +267,36 @@ vim /etc/sudoers
 # 用户名 ALL=(ALL)       ALL
 ```
 
+### 文件相关
+
+```bash
+[hqc@testserver hqcec_test]$ stat tomcat/
+  File: ‘tomcat/’
+  Size: 47              Blocks: 0          IO Block: 4096   directory
+Device: fd02h/64770d    Inode: 108478460   Links: 5
+Access: (0775/drwxrwxr-x)  Uid: ( 1001/     hqc)   Gid: ( 1001/     hqc)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2022-01-10 18:51:26.596807729 +0800
+Modify: 2021-10-08 11:52:16.183331973 +0800
+Change: 2021-10-08 11:52:16.220331972 +0800
+ Birth: -
+[hqc@testserver hqcec_test]$ stat --help
+Usage: stat [OPTION]... FILE...
+Display file or file system status.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -L, --dereference     follow links
+  -f, --file-system     display file system status instead of file status
+  -c  --format=FORMAT   use the specified FORMAT instead of the default;
+                          output a newline after each use of FORMAT
+      --printf=FORMAT   like --format, but interpret backslash escapes,
+                          and do not output a mandatory trailing newline;
+                          if you want a newline, include \n in FORMAT
+  -t, --terse           print the information in terse form
+      --help     display this help and exit
+      --version  output version information and exit
+```
+
 
 
 ### 网络相关
@@ -314,9 +344,74 @@ netstat -n | awk '/^tcp/ {++state[$NF]} END {for(key in state) print key,"\t",st
 netstat -n|grep TIME_WAIT|awk '{print $5}'|sort|uniq -c|sort -rn|head -n20
 ```
 
+#### linux系统查看网卡是否支持WOL网络唤醒并开启WOL唤醒功能
 
+首先需要看电脑的主板是否支持，进入BIOS，一般有两种。
 
-### 系统日志
+一是在开机启动项里是否有Lan启动的选项，有的话就调成优先启动
+
+二是在电源里，有的直接有WOL选项，开启即可。
+
+硬件开启了网络唤醒功能，接下来就需要在系统里设置了。
+
+**检查是否开启WOL唤醒功能**
+
+linux检查网卡是否支持唤醒功能，输入命令命令打印出网卡的信息。
+
+```javascript
+ethtool eth0 
+```
+
+其中eth0是一般服务器，默认的网卡，但是也有例外，所以先用命令 **ifconfig** 查看下所有网络设备，找到你的电脑的网卡，像我的就是eno1。
+
+![image-20220228095334551](linux/image-20220228095334551.png)
+
+其中先看Supports Wake-on的字段，会输出现在网卡支持哪些功能，若为d，则不支持。
+
+- d -- 禁用
+- p -- 物理活动唤醒
+- u -- 单播消息唤醒
+- m -- 多播（组播）消息唤醒
+- b -- 广播消息唤醒
+- a -- ARP 唤醒
+- g -- 特定数据包magic packet唤醒
+- s -- 设有密码的特定数据包magic packet唤醒
+
+然后看Wake-on的值，若为g，表示网卡已开启远程唤醒功能；
+
+**开启WOL唤醒功能**
+
+若为d，则需要输入命令开启。记得将网卡改成自己电脑的。
+
+```javascript
+ethtool -s eth0 wol g
+```
+
+命令执行后，再次输入ethtool eth0，检测是否成功开启wake on lan功能。
+
+为什么这里选择的g，因为其他只是单纯的唤醒，并没有验证，可能路由器的一个广播操作都会将电脑给唤醒，g为特定数据包magic packet唤醒，唤醒的时候是发送一段特殊的代码，进行操作。
+
+> 幻数据包（Magic Packet） 由 AMD 公司提出，幻数据包是一个广播帧，包含待唤醒计算机的MAC地址。完成的幻数据包最简单的构成是6字节的255（FF FF FF FF FF FF FF），紧接着为48位MAC地址，重复16次，数据包共计102字节。通常数据包含在 UDP协议中。
+
+**重启后自动开启WOL唤醒**
+
+每次重启完，网卡的Wake-on属性又会恢复到d的关闭状态，所以每次开机需要再开启，两种方法：
+
+1、加入开机启动项。将以下代码添加至/etc/rc.local
+
+```javascript
+/sbin/ethtool -s eth0 wol g
+```
+
+2、修改网卡属性。编辑/etc/sysconfig/network-scripts/ifcfg-eth0，添加以下代码
+
+```javascript
+ETHTOOL_OPTS=”wol g”
+```
+
+ *PS：要注意将eth0换成自己的网卡*
+
+**系统日志**
 
 ```bash
 dmesg

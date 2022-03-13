@@ -37,11 +37,24 @@ mycli -u 用户名 -h 主机名 -p 密码 --database 数据库
 
 
 
+## 使用
+
+### 创建数据库、用户
+
+```mysql
+create database nextcloud default charset utf8 collate utf8_general_ci;
+grant all privileges on nextcloud.* to 'mass'@'%' identified by 'mass123';
+flush privileges;
+
+CREATE USER 'mass'@'%' IDENTIFIED BY 'mass123';
+
+```
+
 
 
 ## 技巧
 
-## 查看MySql库中所有表的大小和记录数
+### 查看MySql库中所有表的大小和记录数
 
 ```mysql
 SELECT TABLE_NAME,
@@ -260,7 +273,146 @@ END
 DELIMITER ; 
 ```
 
+### 增加工作日天数
 
+```mysql
+SELECT t.CREATEDTIME,
+       DATE_ADD(t.CREATEDTIME, INTERVAL 16 DAY)          as simple,
+       WEEKDAY(DATE_ADD(t.CREATEDTIME, INTERVAL 16 DAY)) as week,
+       DATE_ADD(
+               t.CREATEDTIME,
+               INTERVAL (16 +
+                         IF(
+                                     (WEEK(t.CREATEDTIME) <> WEEK(DATE_ADD(t.CREATEDTIME, INTERVAL 16 DAY)))
+                                     OR (WEEKDAY(DATE_ADD(t.CREATEDTIME, INTERVAL 16 DAY)) IN (5, 6)),
+                                     2,
+                                     0) + 16 div 5 * 2)
+               DAY
+           )                                             AS FinalDate
+from t_core_org t;
+```
+
+
+
+## 函数
+
+### 函数语法
+
+```mysql
+CREATE
+    [DEFINER = user]
+    PROCEDURE [IF NOT EXISTS] sp_name ([proc_parameter[,...]])
+    [characteristic ...] routine_body
+
+CREATE
+    [DEFINER = user]
+    FUNCTION [IF NOT EXISTS] sp_name ([func_parameter[,...]])
+    RETURNS type
+    [characteristic ...] routine_body
+
+proc_parameter:
+    [ IN | OUT | INOUT ] param_name type
+
+func_parameter:
+    param_name type
+
+type:
+    Any valid MySQL data type
+
+characteristic: {
+    COMMENT 'string'
+  | LANGUAGE SQL
+  | [NOT] DETERMINISTIC
+  | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
+  | SQL SECURITY { DEFINER | INVOKER }
+}
+
+routine_body:
+    Valid SQL routine statement
+```
+
+### 函数调用
+
+```mysql
+mysql> delimiter //
+
+mysql> CREATE PROCEDURE citycount (IN country CHAR(3), OUT cities INT)
+       BEGIN
+         SELECT COUNT(*) INTO cities FROM world.city
+         WHERE CountryCode = country;
+       END//
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+
+mysql> CALL citycount('JPN', @cities); -- cities in Japan
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT @cities;
++---------+
+| @cities |
++---------+
+|     248 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> CALL citycount('FRA', @cities); -- cities in France
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT @cities;
++---------+
+| @cities |
++---------+
+|      40 |
++---------+
+1 row in set (0.00 sec)
+
+
+mysql> CREATE FUNCTION hello (s CHAR(20))
+mysql> RETURNS CHAR(50) DETERMINISTIC
+       RETURN CONCAT('Hello, ',s,'!');
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT hello('world');
++----------------+
+| hello('world') |
++----------------+
+| Hello, world!  |
++----------------+
+1 row in set (0.00 sec)
+
+```
+
+
+
+### 函数示例
+
+#### 查找子
+
+```mysql
+CREATE DEFINER=`root`@`localhost` FUNCTION `empdb`.`findChildren`(rootId VARCHAR(100)) RETURNS varchar(4000) CHARSET utf8mb4
+    DETERMINISTIC
+BEGIN
+  DECLARE sTemp VARCHAR(4000);
+  DECLARE sTempChd VARCHAR(4000);
+  SET sTemp = '$';
+  SET sTempChd = rootId;
+  WHILE sTempChd is not null DO
+    SET sTemp = CONCAT(sTemp,',',sTempChd);
+    SELECT GROUP_CONCAT(id) INTO sTempChd FROM t_core_org
+        WHERE FIND_IN_SET(parentid,sTempChd)>0;
+  END WHILE;
+  RETURN sTemp;
+END;
+```
+
+#### 获取当前系统时间
+
+```mysql
+select now() as Systime;
+select current_date as Systime;
+select sysdate() as Systime;
+```
 
 
 
@@ -368,3 +520,20 @@ mysql 服务已经启动成功。
 ![image-20220114180549598](db-mysql/image-20220114180549598.png)
 
 再次运行就不会报错了，但是有一点需要注意，后面列的注释不能用反引号，因为这只是一个普通字符串，不是MySQL的关键字。
+
+- [CREATE FUNCTION throws SQL Error (1064) (42000)](https://stackoverflow.com/questions/66262647/create-function-throws-sql-error-1064-42000)
+
+添加`delimiter`
+
+![image-20220112163903554](db-mysql/image-20220112163903554.png)
+
+- 语法错误
+
+列名称使用的是单引号而不是反引号，所以会就报了这个错误出来。
+
+
+
+## 参考
+
+[mysql8 官方文档](https://dev.mysql.com/doc/refman/8.0/en/examples.html)
+
