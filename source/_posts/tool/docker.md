@@ -237,6 +237,10 @@ $ docker run -d \
     nextcloud
 ```
 
+#### 配置邮箱
+
+![image-20220313194444737](docker/image-20220313194444737.png)
+
 
 
 ### nginx
