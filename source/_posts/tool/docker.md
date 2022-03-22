@@ -416,3 +416,8 @@ mysql> SET GLOBAL sort_buffer_size = 1024 * 1024 * 4;
 
 
 [Linux 编译安装ffmpeg](https://blog.csdn.net/weixin_44517656/article/details/110131015)
+
+
+
+[Nextcloud 管理员手册](http://support.websoft9.com/docs/nextcloud/zh/admin-services.html)
+

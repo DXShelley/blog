@@ -16,6 +16,8 @@ date: 2021-12-21 19:22:46
 
 # Linux 运维
 
+![img](linux/devops-process.png)
+
 ## 常识
 
 ### 语法
@@ -24,11 +26,28 @@ Linux命令格式: `command [-options] [parameter1] …` 命令 选项 参数 �
 
 ### 文件
 
+#### 软链接与硬链接
 
+软连接是指向另外一个文件的文件，类似Windows中的快捷方式文件。例如：`ln -s /usr/share/zoneinfo/Asia/Shanghai2 mysoftlink`
+
+1. 被连接的文件名（路径）建议采用绝对路径
+2. 错误的软连接（又名断开）使用 `ls -l` 的时候显示的是红色
+3. 软连接是一个文件，其在硬盘中是存在数据块的
+4. 软连接文件的数据库中存储的是路径信息，而非真正的数据
+5. 软连接可能是多级嵌套的，例如：B连接A，C连接B，D连接C
+
+硬连接相对于软连接来说，理解会困难一点点。硬连接是把不同的文件名对应到同一个存储块节点上。例如：`ln /data/mymedia.mp4  mymedia2.mp4`
+
+1. 被连接的文件名（路径）建议采用绝对路径
+2. 如果一个文件增加了对应的硬连接，那么删除文件的时候不会删除数据
+3. 硬连接文件存储的是真实数据块位置
+4. 只能对文件建立硬连接，而不能对一个目录建立硬连接
 
 ### 文件树
 
-![bin 和 sbin](linux/170de91179174010tplv-t2oaga2asx-watermark.awebp)
+![image-20220322211056695](linux/image-20220322211056695.png)
+
+![img](linux/linux-folders-websoft9.jpg)
 
 #### 绝对路径与相对路径
 
@@ -47,6 +66,117 @@ Linux命令格式: `command [-options] [parameter1] …` 命令 选项 参数 �
 - 可执行权限（x） 对文件而言，具有执行文件的权限；对目录了来说该用户具有进入目录的权限。 
 
   注意：通常，Unix/Linux系统只允许文件的属主(所有者)或超级用户改变文件的读写权限
+
+
+
+## 常用命令
+
+### 浏览文件
+
+```bash
+dxshelley@dxshelley:~$ cat /etc/nginx/nginx.conf
+# less
+#空格键：前进一页（一个屏幕）；
+#b 键：后退一页；
+#回车键：前进一行；
+#y 键：后退一行；
+#上下键：回退或前进一行；
+#d 键：前进半页；
+#u 键：后退半页；
+#q 键：停止读取文件，中止 less 命令；
+#= 键：显示当前页面的内容是文件中的第几行到第几行以及一些其它关于本页内容的详细信息；
+#h 键：显示帮助文档；
+#/ 键：进入搜索模式后，按 n 键跳到一个符合项目，按 N 键跳到上一个符合项目，同时也可以输入正则表达式匹配
+dxshelley@dxshelley:~$ less /etc/nginx/nginx.conf
+
+dxshelley@dxshelley:~$ tail -f /var/log/apache2/access.log
+```
+
+
+
+### 高频命令
+
+```bash
+# 递归创建目录
+dxshelley@dxshelley:~$ mkdir -p one/two/three
+# 复制目录
+dxshelley@dxshelley:~$ cp -r log one/two/three/
+## 环境变量
+# 列出所有变量
+set
+# 列出所有环境变量
+env
+# 列出和设置环境变量
+export 
+export varname=value
+# 列出所有别名
+alias
+
+## 修改文件所有者
+dxshelley@dxshelley:~$ sudo chown -R dxshelley:dxshelley one/two/
+# 读写执行权限
+find /data/wwwroot/ -type d -exec chmod 750 {} \;
+find /data/wwwroot/ -type f -exec chmod 640 {} \;
+## 修改文件权限
+dxshelley@dxshelley:~$ chmod -R 777 one/two/three/
+dxshelley@dxshelley:~$ chmod -R o-w one/two/three/
+
+## 文件查找
+find <何处> <何物> <做什么>
+### 根据文件名查找
+dxshelley@dxshelley:~$ find ./ -name '*.log'
+### 根据文件大小查找
+dxshelley@dxshelley:~$ find ./ -size +10M
+
+## 压缩
+dxshelley@dxshelley:~$ tar -zcvf test.tar.gz one/
+## 解压到指定目录
+dxshelley@dxshelley:~$ tar -zxvf test.tar.gz -C two
+
+## 网络
+# 显示 tcp，udp 的端口和进程等相关情况。
+netstat -tunlp
+netstat -tunlp | grep 端口号
+# 查看服务器 22 端口的占用情况
+lsof -i:22
+# kill 端口对应的进程
+kill -9 PID
+# 查询当前服务器的连接数
+ps aux | grep httpd | wc -l
+
+
+## 磁盘/内存
+# 查看磁盘空间
+df -lh
+# 查看内存使用
+free -lh
+# 查看当前目录下各文件、文件夹的大小
+du -h –max-depth=1 *
+# 查询当前目录总大小
+du -sh
+# 显示直接子目录文件及文件夹大小统计值
+du -h –max-depth=0 *
+
+
+## 查看哪些用户登录
+dxshelley@dxshelley:~$ w
+ 22:07:19 up 2 days,  5:42,  1 user,  load average: 0.07, 0.08, 0.07
+USER     TTY      来自           LOGIN@   IDLE   JCPU   PCPU WHAT
+dxshelle pts/0    192.168.5.1      21:44    0.00s  1.14s  0.00s w
+dxshelley@dxshelley:~$ 
+
+
+## 主机间文件复制
+scp source_file destination_file
+rsync -arv Images/ backups/ # 将Images 目录下的所有文件备份到 backups 目录下
+rsync -arv Images/ root@192.x.x.x:backups/ # 同步到服务器的backups目录下
+
+
+```
+
+
+
+
 
 ## 基本命令
 
@@ -200,6 +330,9 @@ export HISTIGNORE="ls:history"
 [root@localhost download]# cat /etc/system-release
 CentOS Linux release 7.9.2009 (Core)
 
+# Linux Version
+lsb_release -a
+
 # 查看系统内核信息
 uname -a
 
@@ -293,7 +426,7 @@ dxshelley@dxshelley:~$ fg %1
 dxshelley@dxshelley:~$ 
 ```
 
-
+![image-20220322220928136](linux/image-20220322220928136.png)
 
 
 
@@ -363,6 +496,8 @@ vim /etc/sudoers
 # root    ALL=(ALL)       ALL
 # 用户名 ALL=(ALL)       ALL
 ```
+
+![img](linux/ls-s-websoft9.png)
 
 ### 文件相关
 
@@ -2225,7 +2360,20 @@ For more details see watch(1).
 
 ```
 
+## 日志排查
 
+```bash
+# 查看 systemd 的错误日志，-p 支持 emerg alert err crit warning notice info debug 等值
+journalctl -p err
+# 查看指定服务的日志
+journalctl -u httpd
+# 查看内核日志
+journalctl -k
+# 查看脚本的日志
+journalctl /usr/bin/bash
+# 查看指定用户的日志
+journalctl UID=33 --since today
+```
 
 ## linux 开发部署
 
@@ -2250,9 +2398,43 @@ cat > file1.sh
 find . -name "*.sh" | xargs dos2unix
 ```
 
+## 原理
+
+### 系统启动过程
+
+Linux系统的启动过程分为如下几个阶段：
+
+1. 开机自检：打开电源，BIOS进行硬件自检
+2. 引导加载：自检通过后，进入MBR引导加载程序（MBR是硬盘中第一个扇区的前512个字节, 称为 main boot record）
+3. 内核初始化：加载内核（Kernel）代码，即读入 /boot 目录下的内核文件，监测设备并加载设备驱动程序
+4. Systemd初始化（替代init），获取系统控制权
+   - 执行Systemd程序，Systemd是一个管理进程的进程程序，也是操作系统的第一个进程，其PID=1
+   - 读取 /etc/systemd 下的配置文件
+   - 读取 /etc/systemd/system/default.target 下的运行级别文件
+   - 执行 */etc/rc.d/rc.local* 文件中的程序
+
+2-4 是由GRUB（Grand Unified Bootloader）负责的。其中GRUB boot loader 代码的一小部分（子集）被写入MBR，其余部分存储在/boot分区中
+
+5. Systemd 执行系统初始化
+
+- 设置主机名
+- 初始化网络
+- 基于配置初始化 SElinux
+- 显示欢迎标语
+- 基于内核参数初始化硬件
+- 加载文件系统
+- 清除 /var 中的目录
+- 启动交换分区
+
+6. 建立终端：系统打开6个终端，以便用户登录系统。
+
+7. 用户登录系统：用户登录使用Linux
+
 ## 参考链接
 
 [Vim教程 (aliyun.com)](https://help.aliyun.com/document_detail/116404.html)
 
 [linux 下后台运行python脚本](https://www.jianshu.com/p/4041c4e6e1b0)
+
+[在线生成cron表达式](https://crontab-generator.org/)
 
