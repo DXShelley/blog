@@ -243,6 +243,7 @@ $ docker run -d \
     nextcloud
 ```
 
+<<<<<<< HEAD
 #### 开启缩略图
 
 使用时会发现，Nextcloud 上传的视频不能生成缩略图。其实 Nextcloud 本身支持生成视频缩略图，需要安装 ffm­peg 并修改配置：
@@ -262,6 +263,11 @@ ln -s /usr/local/ffmpeg-4.4/ffplay ffplay
 
 停止 NextCloud 容器，再修改 /var/www/html/con­fig/con­fig.php 配置文件，添加：
 
+=======
+#### 配置邮箱
+
+![image-20220313194444737](docker/image-20220313194444737.png)
+>>>>>>> b243b69759d2d1d54560d6c87508122a6e7d9c8c
 
 
 ```
