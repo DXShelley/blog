@@ -217,6 +217,12 @@ CONTAINER ID   IMAGE                     COMMAND                  CREATED       
 
 ## 使用
 
+
+
+## 进入容器
+
+`docker exec -it [CONTAINER ID] bash `
+
 ### 镜像导出导入
 
 ```bash
@@ -307,11 +313,44 @@ $ docker run -d \
     nextcloud
 ```
 
+<<<<<<< HEAD
+#### 开启缩略图
+
+使用时会发现，Nextcloud 上传的视频不能生成缩略图。其实 Nextcloud 本身支持生成视频缩略图，需要安装 ffm­peg 并修改配置：
+
+http://ffmpeg.org/download.html
+
+```
+docker exec -it nextcloud bash
+apt update
+apt install ffmpeg
+
+cd /usr/bin
+ln -s /usr/local/ffmpeg-4.4/ffprobe ffprobe
+ln -s /usr/local/ffmpeg-4.4/ffmpeg ffmpeg
+ln -s /usr/local/ffmpeg-4.4/ffplay ffplay
+```
+
+停止 NextCloud 容器，再修改 /var/www/html/con­fig/con­fig.php 配置文件，添加：
+
+=======
 #### 配置邮箱
 
 ![image-20220313194444737](docker/image-20220313194444737.png)
+>>>>>>> b243b69759d2d1d54560d6c87508122a6e7d9c8c
 
 
+```
+'enable_previews' => true,
+'enabledPreviewProviders' =>
+array (
+  0 => 'OC\\Preview\\Image',
+  1 => 'OC\\Preview\\Movie',
+  2 => 'OC\\Preview\\TXT',
+),
+```
+
+再次启动容器即可生效。
 
 ### nginx
 
@@ -378,6 +417,28 @@ docker run -d --name=gogs -p 3022:22 -p 3080:3000 -v $GOGS_HOME/gogs:/data gogs/
 ```
 
 
+
+
+
+## 日志
+
+### Docker 引擎日志
+
+Docker 引擎日志一般是交给了 Upstart(Ubuntu 14.04) 或者 systemd (CentOS 7, Ubuntu 16.04)。前者一般位于 /var/log/upstart/docker.log 下，后者我们一般 通过 `journalctl -u docker` 来进行查看。
+
+| 系统                   | 日志位置                                                     |
+| ---------------------- | ------------------------------------------------------------ |
+| Ubuntu(14.04)          | `/var/log/upstart/docker.log`                                |
+| Ubuntu(16.04)          | `journalctl -u docker.service`                               |
+| CentOS 7/RHEL 7/Fedora | `journalctl -u docker.service`                               |
+| CoreOS                 | `journalctl -u docker.service`                               |
+| OpenSuSE               | `journalctl -u docker.service`                               |
+| OSX                    | `~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/log/d?ocker.log` |
+| Debian GNU/Linux 7     | `/var/log/daemon.log`                                        |
+| Debian GNU/Linux 8     | `journalctl -u docker.service`                               |
+| Boot2Docker            | `/var/log/docker.log`                                        |
+
+### 容器日志
 
 
 
@@ -473,4 +534,15 @@ mysql> SET GLOBAL sort_buffer_size = 1024 * 1024 * 4;
 
 [docker修改mysql配置文件后，无法启动mysql容器](https://blog.51cto.com/u_15278282/2932029)
 
+<<<<<<< HEAD
 [docker info 报错](https://www.digitalocean.com/community/questions/how-to-fix-docker-got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket)
+=======
+
+
+[Linux 编译安装ffmpeg](https://blog.csdn.net/weixin_44517656/article/details/110131015)
+
+
+
+[Nextcloud 管理员手册](http://support.websoft9.com/docs/nextcloud/zh/admin-services.html)
+
+>>>>>>> 51d1933c4d2ecf90e3494e0fdea0be79eb271ddb
