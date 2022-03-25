@@ -16,7 +16,43 @@ date: 2022-03-02 11:20:36
 
 ## 安装
 
+## 卸载
+
+```bash
+# 查看相关软件
+dpkg -l | grep docker
+# 卸载相关软件
+apt-get remove docker-ce-cli docker-ce
+apt-get autoremove # 会自动卸载containerd.io等一干软件。
+```
+
+
+
 ## 配置
+
+## 国内源
+
+通用的方法就是编辑`/etc/docker/daemon.json`：
+
+
+
+```json
+{
+  "registry-mirrors" : [
+    "http://registry.docker-cn.com",
+    "http://docker.mirrors.ustc.edu.cn",
+    "http://hub-mirror.c.163.com"
+  ],
+  "insecure-registries" : [
+    "registry.docker-cn.com",
+    "docker.mirrors.ustc.edu.cn"
+  ],
+  "debug" : true,
+  "experimental" : true
+}
+```
+
+然后重启docker的daemon即可。
 
 ### 网络配置
 
@@ -200,20 +236,54 @@ docker run -d -p 9000:9000 -v /root/portainer:/data -v /var/run/docker.sock:/var
 
 
 
+### 安装gitlab
+
+```bash
+# 设置gitlab宿主机目录
+export GITLAB_HOME=/home/pi/docker/gitlab
+
+# 未成功
+sudo docker run --detach \
+  --hostname gitlab.example.com \
+  --publish 4443:443 --publish 8082:80 --publish 2222:22 \
+  --name gitlab \
+  --restart always \
+  --volume $GITLAB_HOME/config:/etc/gitlab \
+  --volume $GITLAB_HOME/logs:/var/log/gitlab \
+  --volume $GITLAB_HOME/data:/var/opt/gitlab \
+  --shm-size 256m \
+  gitlab/gitlab-ce:latest
+
+```
+
 
 
 ### mysql
 
-`sudo docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7`
+```bash
+# 设置mysql宿主机目录
+export MYSQL_HOME=/home/pi/docker/mysql
+
+sudo docker run -p 3306:3306 --name mysql -v $MYSQL_HOME/conf:/etc/mysql/conf.d -v $MYSQL_HOME/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+
+# 备份数据
+$ docker exec some-mysql sh -c 'exec mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > /some/path/on/your/host/all-databases.sql
+# 导入库
+$ docker exec -i some-mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"' < /some/path/on/your/host/all-databases.sql
+
+```
+
+
+
+
 
 
 
 ### nextcloud
 
-`docker run -d --link mysql:mysql --name nextcloud -p5555:80 nextcloud`
-
 ```bash
 $ docker run -d \
+	-p5555:80 \
 	-v nextcloud:/var/www/html \
 	-v apps:/var/www/html/custom_apps \
 	-v config:/var/www/html/config \
@@ -275,9 +345,60 @@ apt-get update
 apt-get install vim
 ```
 
+### 宿主与docker互相拷贝文件
+
+```bash
+pi@raspberrypi:~/docker/mysql $ docker cp mysql:/etc/mysql/my.cnf ./
+```
+
+
+
+### 安装aria2和webgui
+
+```bash
+docker run -d   --name aria2-pro   --restart unless-stopped   --log-opt max-size=1m   -e PUID=1000   -e PGID=1000   -e UMASK_SET=022   -e RPC_SECRET=mass123   -e RPC_PORT=6800   -p 6800:6800   -e LISTEN_PORT=6888   -p 6888:6888   -p 6888:6888/udp   -v $PWD/aria2-config:/config   -v $PWD/downloads:/downloads   p3terx/aria2-pro
+
+docker run -d  --name ariang  --log-opt max-size=1m  --restart unless-stopped  -p 6880:6880  p3terx/ariang
+```
+
+### 安装elasticsearch
+
+`docker run --name elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -d elasticsearch`
+
+
+
+### 安装gogs
+
+```bash
+export GOGS_HOME=/home/pi/docker/gogs
+
+docker pull gogs/gogs-rpi
+
+docker run -d --name=gogs -p 3022:22 -p 3080:3000 -v $GOGS_HOME/gogs:/data gogs/gogs-rpi
+```
+
+
+
 
 
 ## 问题
+
+
+
+### docker info 报错
+
+ERROR: Got permission denied while trying to connect to the Docker daemon socket
+
+```bash
+sudo groupadd docker
+sudo usermod -aG docker ${USER}
+# 执行如下命令或重新登录
+su -s ${USER}
+```
+
+### Pi Image docker info warnings - No kernel memory limit support #303
+
+https://github.com/me-box/databox/issues/303
 
 ### nextcloud始终起不来报错
 
@@ -352,3 +473,4 @@ mysql> SET GLOBAL sort_buffer_size = 1024 * 1024 * 4;
 
 [docker修改mysql配置文件后，无法启动mysql容器](https://blog.51cto.com/u_15278282/2932029)
 
+[docker info 报错](https://www.digitalocean.com/community/questions/how-to-fix-docker-got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket)
