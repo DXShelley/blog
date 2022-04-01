@@ -38,7 +38,18 @@ date: 2021-12-27 20:03:14
 
 
 
+## 正则表达式
+
+https://regex101.com/
+
+[正则表达式可视化-Visual Regexp：在线测试、学习、构建正则表达式 (wangwl.net)](https://wangwl.net/static/projects/visualRegex#)
+
+[The Regular Expression Visualizer, Simulator & Cross-Compiler Tool (robertelder.org)](https://blog.robertelder.org/regular-expression-visualizer/)
+
 ## 杂
 
 [中华诗词](https://www.shi-ci.com/)
 
+
+
+[U盘修复](https://mp.weixin.qq.com/s/sMJKBFv_yZHeYCSsjdafrQ)

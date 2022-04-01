@@ -34,3 +34,37 @@ setColumnWidth(int columnIndex, int width)设置的宽度包括4像素的边距�
 sheet.setColumnWidth(0,35 * 256 + 184);
 ```
 
+
+
+### 根据行号获取字母
+
+```java
+public static String getColumnName(int columnNum) {
+
+        int first;
+
+        int last;
+
+        String result = "";
+
+        if (columnNum > 256)
+
+            columnNum = 256;
+
+        first = columnNum / 27;
+
+        last = columnNum - (first * 26);
+
+        if (first > 0)
+
+            result = String.valueOf((char) (first + 64));
+
+        if (last > 0)
+
+            result = result + String.valueOf((char) (last + 64));
+
+        return result;
+
+    }
+```
+
